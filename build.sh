@@ -50,6 +50,9 @@ for chapter in $chapters; do
             content_name=${content_name//[0-9][0-9]_/}
             content_name=${content_name//_/ }
 
+            # lowercase "content"
+            content=$(echo "$content" | tr '[:upper:]' '[:lower:]')
+
             echo "        { text: '$content_name', link: '/ko/$content' }," | tee -a $CONSTS_PATH
         done
         echo "      ]," | tee -a $CONSTS_PATH
