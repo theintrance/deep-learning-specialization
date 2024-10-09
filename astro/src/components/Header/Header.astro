@@ -22,14 +22,15 @@ const lang = getLanguageFromURL(currentPage)
       <SidebarToggle client:idle />
     </div>
     <div class="logo flex">
-      <a href="/">
-        <AstroLogo size={40} />
-        <h1>{SITE.title ?? 'Documentation'}</h1>
+      <a href="/deep-learning-specialization/">
+        <img src="https://github.com/theintrance.png" width="50" height="50" />
+        <h1>{SITE.title ?? 'Deep Learning Specialization'}</h1>
       </a>
     </div>
     <!-- <div style="flex-grow: 1;"></div> -->
-    <div class="search-item">
-    </div>
+    <!-- <div class="search-item">
+      <Search client:idle />
+    </div> -->
     {
       KNOWN_LANGUAGE_CODES.length > 1 && (
         <LanguageSelect lang={lang} client:idle />
