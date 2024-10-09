@@ -16,7 +16,10 @@ Studying deep learning with deeplearning.ai on Coursera.
 
 ### Members
 
+<img src="https://github.com/bayernmuller.png" width="100" height="100">
+
 - [@bayernmuller](https://github.com/bayernmuller)
-  <img src="https://github.com/bayernmuller.png" width="50" height="50">
+
+<img src="https://github.com/hyunwok.png" width="100" height="100">
+
 - [@hyunwok](https://github.com/hyunwok)
-  <img src="https://github.com/hyunwok.png" width="50" height="50">
