@@ -62,3 +62,12 @@ $$
 $$
 
 * 위 식에서 $\Gamma_r$ 은 $c$ 가 $\tilde{c}$ 로 업데이트 되는 것이 얼마나 적절한지 결정하는 게이트로, 이전 상태를 얼마나 리셋할지 조절한다.
+
+#### 요약
+
+1. **$c^{<t>}$**: 현재 시점의 hidden state, 기억된 정보.
+2. **$\tilde{c}^{<t>}$**: 새로운 candidate hidden state, 현재 입력과 이전 상태로 계산됨.
+3. **$\Gamma_u$**: Update Gate, 새로운 정보와 이전 정보를 섞는 비율 결정.
+4. **$\Gamma_r$**: Reset Gate, 이전 정보를 얼마나 리셋할지 결정.
+5. **$W_u$, $W_r$, $W_c$**: Update, Reset, Candidate hidden state 계산을 위한 가중치.
+6. **$b_u$, $b_r$, $b_c$**: Update, Reset, Candidate hidden state 계산을 위한 편향.
