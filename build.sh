@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 PUBLIC_PATH="astro/public"
 KO_DOCS_PATH="astro/src/content/docs/ko"
 CONSTS_PATH="astro/src/consts.ts"
@@ -65,3 +67,6 @@ for chapter in $chapters; do
 done
 echo "  }" | tee -a $CONSTS_PATH
 echo "};" | tee -a $CONSTS_PATH
+
+cd astro || exit 1
+pnpm astro build
