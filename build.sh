@@ -67,6 +67,3 @@ for chapter in $chapters; do
 done
 echo "  }" | tee -a $CONSTS_PATH
 echo "};" | tee -a $CONSTS_PATH
-
-cd astro || exit 1
-pnpm astro build
