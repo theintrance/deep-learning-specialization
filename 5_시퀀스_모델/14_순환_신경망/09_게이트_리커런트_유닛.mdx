@@ -2,3 +2,63 @@
 title: 게이트 리커런트 유닛
 ---
 
+### GRU (Gated Recurrent Unit)
+
+* RNN 의 예전 시퀀스의 정보를 잘 기억하지 못하는 문제를 해결하기 위해 만들어진 모델이다.
+* 기존 RNN에서 $c$ (Hidden State)라는 변수를 사용하여 지난 시퀀스의 정보를 저장하도록 한다.
+
+$$
+c^{<t>}
+$$
+
+#### 단순화 된 GRU
+
+> The cat, which already ate, ... was full.
+
+* 위 예문에서 RNN 은 주어인 "The cat" 이 단수임을 기억하다 마지막에 "was" 라고 예측해야 한다.
+* $c$를 도입하여 주어의 단수 여부를 기억시킨다.
+
+    * 이 경우 $c^{<1>} = 1$ 이 된다.
+* $\Gamma_u$ 는 Update Gate 로 기억하고 있는 정보를 언제까지 유지할지 결정하는 게이트이다.
+
+$$
+\tilde{c}^{<t>} = \tanh(W_c[c^{<t-1>}, x^{<t>}] + b_c)
+$$
+
+$$
+\Gamma_u = \sigma(W_u[c^{<t-1>}, x^{<t>}] + b_u)
+$$
+
+* $\tilde{c}$ 는 새로운 정보를 의미하고, $c$ 는 기억하고 있는 정보를 의미한다.
+
+$$
+c^{<t>} = \Gamma_u * \tilde{c}^{<t>} + (1 - \Gamma_u) * c^{<t-1>}
+$$
+
+* 위 식에서 $\Gamma_u$ 가 1 이면 새로운 정보를 기억하고, 0 이면 기억하고 있는 정보를 유지한다. $\Gamma_u$ 값이 0과 1 사이인 경우, 새로운 정보와 이전 정보가 혼합된다.
+
+$$
+\begin{array}{|c|c|c|c|c|c|c|}
+\hline
+\text{The cat} & \text{which} & \text{already} & \text{ate} & ... & \text{was} & \text{full.} \\
+\hline
+\Gamma_u = 1 & \Gamma_u = 0 & \Gamma_u = 0 & \Gamma_u = 0 & ... & \Gamma_u = 1 & \Gamma_u = 0 \\
+\hline
+\end{array}
+$$
+
+* $c$와 $\Gamma_u$는 벡터가 될 수 있다. 곧 $c^{<t>}$의 계산식에서 $*$는 Element-wise 곱셈이다.
+
+#### 전체 GRU
+
+* 위의 단순화 된 GRU 에서 적절성을 관리하는 리셋 게이트 $\Gamma_r$ 을 추가한다.
+
+$$
+\Gamma_r = \sigma(W_r[c^{<t-1>}, x^{<t>}] + b_r)
+$$
+
+$$
+\tilde{c}^{<t>} = \tanh(W_c[\Gamma_r * c^{<t-1>}, x^{<t>}] + b_c)
+$$
+
+* 위 식에서 $\Gamma_r$ 은 $c$ 가 $\tilde{c}$ 로 업데이트 되는 것이 얼마나 적절한지 결정하는 게이트로, 이전 상태를 얼마나 리셋할지 조절한다.
