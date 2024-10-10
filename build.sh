@@ -67,3 +67,10 @@ for chapter in $chapters; do
 done
 echo "  }" | tee -a $CONSTS_PATH
 echo "};" | tee -a $CONSTS_PATH
+
+# replace ![](/assets/...) to ![](assets/...)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    find $KO_DOCS_PATH -type f -name '*.mdx' -exec sed -i '' 's/!\[\](\/assets/!\[\](assets/g' {} +
+else
+    find $KO_DOCS_PATH -type f -name '*.mdx' -exec sed -i 's/!\[\](\/assets/!\[\](assets/g' {} +
+fi
