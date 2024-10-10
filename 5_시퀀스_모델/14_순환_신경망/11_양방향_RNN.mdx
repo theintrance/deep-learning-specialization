@@ -13,13 +13,13 @@
 [출처](https://medium.com/@raghavaggarwal0089/bi-lstm-bc3d68da8bd0)
 
 * 양방향 RNN은 기존 RNN의 각 유닛에 Forward 유닛과 Backward 유닛을 추가한다. 이렇게 하면 모델은 문장의 앞쪽과 뒤쪽 모두에서 정보를 가져올 수 있게 되어, 더 정확한 예측이 가능하다.
-* 양방향 RNN의 출력값 \(\hat{y}^{<t>}\)는 순방향 (\(\overrightarrow{a^{<t>}}\))과 역방향 (\(\overleftarrow{a^{<t>}}\))의 hidden state를 모두 결합하여 계산된다.
+* 양방향 RNN의 출력값 $\hat{y}^{<t>}$는 순방향 $\overrightarrow{a^{<t>}}$과 역방향 $\overleftarrow{a^{<t>}}$의 hidden state를 모두 결합하여 계산된다.
 
 $$
 \hat{y}^{<t>} = g(W_y[\overrightarrow{a^{<t>}}, \overleftarrow{a^{<t>}}] + b_y)
 $$
 
-* 여기서 \(\overrightarrow{a^{<t>}}\)는 t 시점까지 순방향으로 처리된 정보이고, \(\overleftarrow{a^{<t>}}\)는 t 시점까지 역방향으로 처리된 정보이다. 이 두 정보를 결합함으로써 문장의 전체 문맥을 고려할 수 있다.
+* 여기서 $\overrightarrow{a^{<t>}}$는 t 시점까지 순방향으로 처리된 정보이고, $\overleftarrow{a^{<t>}}$는 t 시점까지 역방향으로 처리된 정보이다. 이 두 정보를 결합함으로써 문장의 전체 문맥을 고려할 수 있다.
 * Forward와 Backward 유닛은 LSTM 또는 GRU로 구현될 수 있다.
 
 ### 양방향 RNN의 단점
