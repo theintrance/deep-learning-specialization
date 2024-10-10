@@ -23,6 +23,7 @@ const editUrl = `${EDIT_URL}/${currentFile}`
 
 <html dir={data.dir} lang={data.lang} class="initial">
   <head>
+    <base href={import.meta.env.BASE_URL} /> 
     <HeadCommon />
     <HeadSEO {...data} canonicalUrl={canonicalURL} />
     <title>
