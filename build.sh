@@ -53,6 +53,10 @@ for chapter in $chapters; do
             # lowercase "content"
             content=$(echo "$content" | tr '[:upper:]' '[:lower:]')
 
+            # remove ( and ) from content
+            content=${content//\(/}
+            content=${content//\)/}
+
             echo "        { text: '$content_name', link: '/ko/$content' }," | tee -a $CONSTS_PATH
         done
         echo "      ]," | tee -a $CONSTS_PATH
