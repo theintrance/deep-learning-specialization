@@ -2,3 +2,38 @@
 title: 장단기 메모리 (LSTM)
 ---
 
+### Long Short-Term Memory (LSTM)
+
+* GRU 와 마찬가지로 기존 RNN 의 장단기 메모리를 잘 기억하지 못하는 문제를 해결하기 위해 만들어진 모델이다.
+* LSTM 은 GRU 보다 더 복잡하지만 더 좋은 성능을 보인다.
+
+$$
+\tilde{c}^{<t>} = \tanh(W_c[a^{<t-1>}, x^{<t>}] + b_c)
+$$
+* GRU 와 다르게 $\tilde{c}$ 계산 시 $a^{<t-1>}$ 을 사용한다, 즉 $c^{<t>}\neq{}a^{<t>}$ 이다.
+
+$$
+\Gamma_u=\sigma(W_u[a^{<t-1>}, x^{<t>}] + b_u)
+$$
+
+$$
+\Gamma_f=\sigma(W_f[a^{<t-1>}, x^{<t>}] + b_f)
+$$
+
+$$
+\Gamma_o=\sigma(W_o[a^{<t-1>}, x^{<t>}] + b_o)
+$$
+
+$$
+c^{<t>} = \Gamma_u * \tilde{c}^{<t>} + \Gamma_f * c^{<t-1>}
+$$
+
+$$
+a^{<t>} = \Gamma_o * \tanh(c^{<t>})
+$$
+
+* $\Gamma_u$: Update gate, $\tilde{c}$ 를 얼마나 반영할지 결정
+* $\Gamma_f$: Forget gate, 기존 메모리를 얼마나 잊을지 결정
+* $\Gamma_o$: Output gate, 출력을 얼마나 내보낼지 결정
+
+![](/assets/0f7c1ec7-856f-4999-a106-ada0d5e52709.png)
