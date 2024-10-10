@@ -7,9 +7,10 @@ type Props = {
   title: string
   headings: MarkdownHeading[]
   editUrl: string
+  author: string
 }
 
-const { title, headings, editUrl } = Astro.props
+const { title, headings, editUrl, author } = Astro.props
 ---
 
 <article id="article" class="content">
@@ -19,6 +20,13 @@ const { title, headings, editUrl } = Astro.props
       <TableOfContents client:media="(max-width: 50em)" headings={headings} />
     </nav>
     <slot />
+    {author && (
+      <div class="author" style="display: flex; align-items: center;">
+        <span>by</span>
+        <img src={`https://github.com/${author}.png`} width="40" height="40" style="vertical-align: middle; border-radius: 50%; margin: 0 8px;" />
+        <a href={`https://github.com/${author}`}><b>@{author}</b></a>
+      </div>
+    )}
   </section>
   <nav class="block sm:hidden">
     <MoreMenu editHref={editUrl} />
