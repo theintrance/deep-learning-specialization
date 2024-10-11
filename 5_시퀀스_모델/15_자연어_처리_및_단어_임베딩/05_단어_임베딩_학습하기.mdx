@@ -2,3 +2,51 @@
 title: 단어 임베딩 학습하기
 ---
 
+### Neural Language Model
+
+|Word:|I|want|a|glass|of|orange|____.
+|---|---|---|---|---|---|---|---
+|Index:|4343|9665|1|3852|6163|6257|?
+
+* 문장의 마지막에 올 단어를 예측해보자.
+
+$$
+x^{<1>} = \text{"I"} \rightarrow o_{4343} \rightarrow E \cdot o_{4343} = e_{4343}
+$$
+
+$$
+x^{<2>} = \text{"want"} \rightarrow o_{9665} \rightarrow E \cdot o_{9665} = e_{9665}
+$$
+
+$$
+x^{<3>} = \text{"a"} \rightarrow o_{1} \rightarrow E \cdot o_{1} = e_{1}
+$$
+
+$$
+x^{<4>} = \text{"glass"} \rightarrow o_{3852} \rightarrow E \cdot o_{3852} = e_{3852}
+$$
+
+$$
+x^{<5>} = \text{"of"} \rightarrow o_{6163} \rightarrow E \cdot o_{6163} = e_{6163}
+$$
+
+$$
+x^{<6>} = \text{"orange"} \rightarrow o_{6257} \rightarrow E \cdot o_{6257} = e_{6257}
+$$
+
+* 임베딩 테이블 $E$ 가 10000 x 300 차원이라면, $e_{index}$ 는 300 차원의 벡터가 된다.
+
+* 이렇게 각 단어의 임베딩 벡터를 신경망에 넣고 10000개의 출력을 가지는 softmax 층을 통과시키면 다음에 나오는 단어를 예측할 수 있다.
+
+### 더 긴 문장에서의 단어 예측
+
+* 문장이 길어질 수록 단어를 예측할 때 문맥 (Context) 를 잘 이해해야 한다.
+    * 예를 들어 orange juice 에서 juice 를 예측할 때는 orange 가 문맥이 된다.
+
+* 언어 모델이 단어를 예측할 때 사용할 문맥의 범위를 설정할 수 있다.
+1. 앞 4개 단어
+2. 앞 8개 단어
+3. 앞 뒤 각각 4개 단어
+4. 앞 1개 단어 (Skip-Gram)
+
+* 등등 다양하게 설정할 수 있다.
