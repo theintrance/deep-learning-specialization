@@ -2,3 +2,56 @@
 title: Word2Vec
 ---
 
+### Skip-Gram
+
+* Skip-Gram 모델은 중심 단어 (context) 를 기준으로 주변 단어 (target) 를 예측하는 모델이다.
+
+$$
+\text{I want a glass of orange juice to go along with my cereal.}
+$$
+
+* 위 문장에서 context 단어가 "orange" 일 때 주변 단어를 선정하여 다음과 같은 모델을 학습한다.
+    * context 단어와 target 단어 사이 거리는 주어진 범위 (예: $\pm{5}$ 또는 $\pm{10}$ 등) 내에서 무작위로 선정한다.
+    * 예시로 "orange" 의 주변 단어로 "juice" 를 선정하였다고 가정하자.
+
+$$
+\text{context: }c \text{  ("orange")} \rightarrow \text{target: }t \text{  ("juice")}
+$$
+
+$$
+O_c \rightarrow E \rightarrow e_c \rightarrow \text{softmax unit} \rightarrow \hat{y}
+$$
+
+$$
+p(t \mid c) = \frac{e^{\theta_t^Te_c}}{\sum_{j=1}^{V} e^{\theta_j^Te_c}}
+$$
+
+$$
+\mathcal{L}=-\sum_{i=1}^{V} y_i \log \hat{y}_i
+$$
+
+* 여기서 $\theta_t$ 는 타겟 단어의 파라미터 벡터이다.
+    * 즉 모델의 학습 대상인 가중치, 바이어스 등을 의미한다.
+
+
+### NLP 에서 softmax 분류의 문제
+
+$$
+p(t \mid c) = \frac{e^{\theta_t^Te_c}}{\sum_{j=1}^{V} e^{\theta_j^Te_c}}
+$$
+
+* 위 식에서 분모의 합을 계산하는 과정에서 모든 단어에 대한 확률을 계산해야 하므로 계산 비용이 매우 높다.
+* $V$ 가 크면 클수록 계산 비용이 증가한다.
+
+#### 해결법 \: Hierarchical Softmax
+
+* 계층적 softmax 를 사용하면 트리 구조를 사용하여 계산 비용을 줄일 수 있다.
+    * 총 10,000 개 단어를 예측한다고 했을 때, 첫번째 층에서 5000개 5000개, 두번째 층에서 2500개 2500개, 세번째 층에서 1250개 1250개로 나누어 계산하므로 계산 비용이 줄어든다.
+* 계산 시간 복잡도가 $\log V$ 로 줄어든다.
+* 예시와는 다르게 실제로는 대칭 트리를 사용하지 않을 수도 있다. 단어 집합에 따라 트리의 형태가 달라질 수 있다.
+    * 많이 사용되는 단어는 루트에 가깝게, 적게 사용되는 단어는 루트에서 멀리 위치하도록 한다.
+
+### 그럼 $c$ (context) 는 어떻게 선정하는가?
+
+* context 단어를 선택할 때, 단순히 모든 단어를 균등하게 선택하면 자주 나오는 단어들("the", "and" 등)이 지나치게 많이 학습된다.
+    * 따라서, 자주 나오는 단어들은 샘플링 확률을 낮추고, 덜 자주 나오는 단어들의 샘플링 확률을 높이는 조정된 샘플링 기법을 사용한다.
