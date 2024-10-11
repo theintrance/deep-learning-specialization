@@ -2,3 +2,30 @@
 title: 글로브 워드 벡터
 ---
 
+### GloVe (Global Vectors for Word Representation)
+
+$$
+\text{I want a glass of orange juice to go along with my cereal.}
+$$
+
+* 지난시간까지 context 단어, target 단어 쌍을 샘플링하여 모델을 학습하였다.
+* GloVe는 대신 다음과 같은 방법을 사용한다
+
+$$
+X_{ij} = \text{\#times }i\text{ appears in the context of }j
+$$
+
+* $X_{ij}$ 는 단어 $i$ 가 단어 $j$ 의 컨텍스트에 등장한 횟수를 의미한다.
+* $i, j$ 는 Skip-Gram 모델에서의 $c, t$ 와 유사한 역할을 한다.
+
+* 즉 $X_{ij}$ 는 단어 $i$ 와 $j$ 가 서로 얼마나 자주 등장하는지 포착하는 수치이고 자주 등장할수록 서로 관련이 있는 단어라고 판단할 수 있다.
+* GloVe 모델은 이 수치를 바탕으로 단어 벡터를 학습하려고 한다.
+
+
+$$
+\text{minimize } \sum_{i=1}^{V}\sum_{j=1}^{V} f(X_{ij})(\theta_i^Te_j + b_i + b_j - \log{X_{ij}})^2
+$$
+
+* $\theta_i$, $e_j$ 는 각각 단어 $i$ 와 $j$ 의 임베딩 벡터이다.
+* $f$ 는 가중치 함수이다.
+    * 이 함수는 빈도수가 낮은 단어쌍에 대해서는 패널티를 주지 않도록 한다.
