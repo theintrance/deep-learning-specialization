@@ -27,8 +27,13 @@ $$
 3. 해당 축을 bias direction 이라고 하고 편향에 영향을 끼치지 않는 축을 non-bias direction 이라고 한다.
 4. **중립화**: 성적으로 중립적이야 하는 단어들 (doctor, babysitter, nurse 등) 의 임베딩 벡터들을 bias direction이 0 이되는 쪽으로 이동시킨다. 
     * 즉 벡터에서 bias direction 축 성분을 제거한다.
+
+![](/assets/e7d5d759-14a5-4491-b130-54440b6d1e4f.png)
+
 5. **평준화**: 중립 단어들을 이동시켰고, 이제 서로 성별만 다른 단어들 (girl:boy, grandmother:grandfather) 의 임베딩 벡터들의 위치도 non-bias direction 축과의 거리가 같도록 조정한다.
     * 즉 $d(e_{girl}, e_{babysitter}) = d(e_{boy}, e_{babysitter})$ 가 되도록 한다.
+
+![](/assets/93902547-11e1-4cbc-aad6-24d238d66e4b.png)
 
 * 이와 같은 방법으로 편향을 줄일 수는 있지만, 중립화와 평쥰화 될 벡터는 누가 어떻게 선정하는가?
      * 예: beard (수염) 같은 경우 남자쪽으로 벡터가 치우쳐야할까?
