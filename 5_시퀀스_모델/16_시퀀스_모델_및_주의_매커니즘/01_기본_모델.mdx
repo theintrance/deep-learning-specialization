@@ -2,3 +2,16 @@
 title: 기본 모델
 ---
 
+### 다양한 시퀀스 to 시퀀스 모델
+
+* many-to-many 방식의 RNN 은 여러가지 모델에 적용될 수 있다.
+
+### Translation Model
+
+![](/assets/29e67eb7-8c2a-4b39-8fe6-75ac31fc9c9b.png)
+
+### Image Captioning Model
+
+* 우리는 AlexNet 같은 CNN 에서 이미지를 입력으로 받아 총 4096 차원의 벡터로 변환할 수 있었고 이 flat vector 를 이용해 softmax 를 통해 이미지 분류를 해결할 수 있었다.
+* 이미지 캡셔닝 모델의 경우 끝에 softmax 를 쓰지않고 RNN 을 이용해 이미지를 설명하는 문장을 만들어낸다.
+
