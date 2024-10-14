@@ -2,3 +2,28 @@
 title: 가장 가능성이 높은 문장 선택하기
 ---
 
+### 번역 모델
+
+![](/assets/5c3fc4f8-f9ae-453b-a8f4-099a3e58e836.png)
+
+* 번역 모델은 encoder와 decoder로 구성되어 있으며, 지난 시간에 배운 언어 모델과는 다르게 $y^{<1>}$ 을 도출할 때 $\vec{0}$ 을 사용하지 않고 encoder의 마지막 은닉 상태를 사용한다.
+
+* 이 모델은 $P(y^{<1>}, y^{<2>}, ..., y^{<T_y>} | x^{<1>}, x^{<2>}, ..., x^{<T_x>})$ 를 추정하는 역할을 한다.
+
+* 예를 들어, 프랑스어 입력을 받아 영어로 번역하는 모델이라면 이렇게 다양한 문장들이 예측될 수 있다:
+    * Jane is visiting Africa in September.
+    * Jane is going to visit Africa in September.
+    * In September, Jane will visit Africa.
+    * Her African friend welcomed Jane in September.
+
+* 첫 번째 문장은 가장 자연스럽고, 두 번째 문장은 약간 어색하며, 마지막 문장은 번역이 잘못된 문장이다.
+
+* 우리의 목표는 $P(\text{Jane is visiting Africa in September}|x)$ 와 같은 문장의 확률을 최대화하는 것이다.
+
+* 비슷한 두 문장인 "Jane is visiting Africa in September" 와 "Jane is going to visit Africa in September" 를 비교해보자.
+* 어휘 집합에서 무작위로 단어를 고른다면 두 번째 문장의 확률이 더 높아질 수 있다.
+    * 예를 들어, "is" 다음에 "going" 이 나올 가능성이 더 높기 때문이다.
+
+* 즉, 어휘 집합 크기만을 기준으로 단어를 선택하면 부자연스러운 문장이 나올 수 있다.
+* 만약 문장의 단어가 10개라면, $V^{10}$ 가지의 경우의 수가 생기기 때문에 계산이 매우 복잡해진다.
+* 이를 해결하기 위해 근사 확률 알고리즘(예: 빔 서치)을 사용하여 더 자연스러운 문장을 생성한다.
