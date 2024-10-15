@@ -4,9 +4,11 @@ type Props = {
   path: string
 }
 const { path } = Astro.props
-const resolvedPath = `${path}`
-const url = `https://api.github.com/repos/advanced-astro/astro-docs-template/commits?path=${resolvedPath}`
-const commitsURL = `https://github.com/advanced-astro/astro-docs-template/commits/main/${resolvedPath}`
+const sliceIndex = path.indexOf('/ko/') + 3
+const resolvedPath = path.slice(sliceIndex)
+console.log(resolvedPath)
+const url = `https://api.github.com/repos/theintrance/deep-learning-specialization/commits?path=${resolvedPath}`
+const commitsURL = `https://github.com/theintrance/deep-learning-specialization/commits/main/${resolvedPath}`
 
 type Commit = {
   author: {
