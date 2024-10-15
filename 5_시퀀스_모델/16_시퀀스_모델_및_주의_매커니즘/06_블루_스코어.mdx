@@ -1,4 +1,71 @@
 ---
-title: 블루 스코어
+title: 블루(Bleu) 스코어
 ---
 
+### 무엇이 더 좋은 번역인가?
+
+* 프랑스어를 번역할 때, 오류가 없고 자연스러운 여러 개의 번역이 있을 수 있다.
+* 모델은 여러 가지 번역들 중 어떤 것을 선택해야 할까?
+
+### 번역 평가하기
+
+* Le chat est sur le tapis.
+    * 사람 번역 1: The cat is on the mat
+    * 사람 번역 2: There is a cat on the mat.
+    * 모델 번역 : the the the the the the the
+
+* 여기서 모델 번역의 정밀도를 측정할 수 있는데, 모델 번역의 단어가 사람 번역에 사용되는지를 확인한다.
+    * 모델 번역의 총 7개 단어 중 2개의 "the"가 사람 번역 1 문장에서 사용되므로, 정밀도는 $\frac{2}{7}$로 평가된다.  
+    
+### Bigram 의 Bleu 스코어
+
+* Le chat est sur le tapis.
+    * 참조 번역 1: The cat is on the mat
+    * 참조 번역 2: There is a cat on the mat.
+    * 모델 번역 : The cat the cat on the mat.
+
+* Bigram은 두 개의 연속된 단어 쌍을 의미한다.
+* 모델 번역에서 Bigram을 추출하고, 각 Bigram이 모델 번역에서 몇 번 등장하는지를 "Count"로 표시하고, 각 Bigram이 참조 번역에서 몇 번 등장하는지를 "Count$_{clip}$"로 표시한다.
+
+|Bigram|Count|Count$_{clip}$|
+|------|-----|-------------|
+|the cat|2|1|
+|cat the|1|0|
+|cat on|1|1|
+|on the|1|1| 
+|the mat|1|1|
+
+* Count의 합은 6이고, Count$_{clip}$의 합은 4이다.
+* 모델 번역에서 사용된 Bigram 중 참조 번역에서 사용된 Bigram의 비율을 계산하면 다음과 같다.
+    * $\frac{4}{6} = \frac{2}{3}$
+
+* 이를 통해 모델 번역 Bigram의 Bleu 스코어를 계산할 수 있다.
+    * 모델 번역의 정밀도 = $\frac{Count_{clip}}{Count}$ = $\frac{4}{6}$ = $\frac{2}{3}$
+
+### n-gram 의 Bleu 스코어
+
+* Bigram에서의 Bleu 스코어 계산 방법을 바탕으로 이를 일반화하여 n-gram에서도 동일하게 적용할 수 있다.
+
+$$
+p_n = \frac{\sum_{\text{n-gram}\in{\hat{y}}}Count_{clip}(\text{n-gram})}{\sum_{\text{n-gram}\in{\hat{y}}}Count(\text{n-gram})}
+$$
+
+### Bleu 스코어 함수
+
+$p_n$을 일반화할 수 있었고, $n$이 4까지라고 가정했을 때 전체 Bleu 스코어의 값은 다음과 같다.
+
+$$
+\text{Combined Bleu Score} = BP\cdot\exp{\left(\frac{1}{4}\sum_{n=1}^{4}p_n\right)}
+$$
+
+* BP는 brevity penalty를 의미한다.
+
+$$
+BP = 
+\begin{cases} 
+1 & \text{if \text{Model output length} > \text{Reference output length}} \\
+\exp{(1 - \frac{\text{Reference output length}}{\text{Model output length}})} & \text{otherwise}
+\end{cases}
+$$
+
+* BP는 모델 번역의 길이가 참조 번역의 길이보다 짧을 때 페널티를 부여하며, 길 때는 페널티가 없다. 이로 인해 너무 짧은 번역에 대한 페널티를 적용하여 자연스러운 번역 길이를 유지하도록 유도한다.
