@@ -2,3 +2,35 @@
 title: "빔 검색의 오류 분석"
 ---
 
+### 빔 검색의 오류 분석
+
+* 빔 검색은 $B$ 개의 경로만 동시에 유지하기 때문에 최적의 경로를 항상 찾지 못할 가능성이 있다.
+
+> 예시 문장: Jane visite l'Afrique en septembre.
+
+* 이 문장을 사람과 모델이 각각 번역하였을 때 아래와 같다고 가정하면:
+    * 사람: Jane visits Africa in September. ($y^*$) (더 좋은 번역)
+    * 모델: Jane visited Africa last September. ($\hat{y}$) (틀린 번역)
+
+#### 경우 1:
+$$
+P(y^* | x) > P(\hat{y} | x)
+$$
+* 사람이 생성한 문장($y^*$)이 모델이 생성한 문장($\hat{y}$)보다 확률이 높음에도 불구하고, 빔 검색은 $\hat{y}$ 를 선택하였다.
+* 이는 빔 검색이 잘못된 경로를 선택한 오류이다.
+
+#### 경우 2:
+$$
+P(y^* | x) \le P(\hat{y} | x)
+$$
+* $y^*$ 이 $\hat{y}$ 보다 나은 번역임에도 불구하고, 모델(RNN)은 $\hat{y}$ 의 확률을 더 높게 판단했다.
+* 이는 모델(RNN)의 학습 과정에서 발생한 오류이다.
+
+### 오류 분석 테이블
+
+|Human|Algorithm|$P(y^*ㅣx)$|$P(\hat{y}ㅣx)$|At fault?|
+|:---:|:---:|:---:|:---:|:---:|
+|Jane visits Africa in September.|Jane visited Africa last September.|$2\times 10^{-10}$|$1\times 10^{-10}$|Beam Search|
+|...|...|...|...|...|
+
+* 이 테이블은 각 상황에서 빔 검색의 오류인지, RNN 모델 자체의 오류인지를 분석하는 데 도움을 준다.
