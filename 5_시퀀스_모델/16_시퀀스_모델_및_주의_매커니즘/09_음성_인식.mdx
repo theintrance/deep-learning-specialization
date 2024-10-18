@@ -2,3 +2,33 @@
 title: 음성 인식
 ---
 
+### Speech Recognition
+
+$$
+\begin{matrix}
+x & & y \\
+\text{audio clip} & \rightarrow & \text{transcript}
+\end{matrix}
+$$
+
+* 음성 인식 모델은 음성 데이터를 텍스트로 변환하는 모델
+* 소리 데이터를 바로 처리하는 것은 까따로워 스펙토그램으로 변환하는 등의 방법으로 전처리를 거침
+
+* 예전에는 음소 기반 인식을 해왔으나 End-to-End 딥러닝 방식이 발전하면서 음소 단위로 인식하는 방식이 대체됨
+
+
+### CTC cost for Speech Recognition
+
+> "The quick brown fox"
+
+* 누군가 위 문장을 말한 음원의 오디오클립을 어떻게 텍스트로 인식할 수 있을까?
+
+* 음원이 10초, Sample Rate 가 100Hz 라면 1000개의 샘플을 가진 시퀀스가 된다.
+* 여기서 1대 1 대응이 되는 RNN 을 구성한다 ($T_x=T_y$)
+* CTC 를 사용한 모델은 다음과 같다.
+
+```text
+ttt___h___eeee____^____qqqq__....
+```
+
+* 1000개의 출력 시퀀스가 위와 같이 나오고, 문자열을 정제하여 최종 출력을 얻는다.
