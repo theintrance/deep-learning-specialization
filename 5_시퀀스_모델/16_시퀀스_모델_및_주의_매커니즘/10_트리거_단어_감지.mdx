@@ -2,3 +2,34 @@
 title: 트리거 단어 감지
 ---
 
+### 트리거 워드
+
+* 인공지능 스피커를 부를 때 사용하는 단어
+    * Hey Siri
+    * Alexa
+    * Hey Google
+    * ...
+
+* 이걸 어떻게 감지할 수 있을까?
+
+### 트리거 워드 감지
+
+* 본오디오 입력 $x$ 를 받아 해당 시퀀스가 트리거 워드인지 판단하는 이진 출력 $y$ 를 생성하는 모델을 구축할 수 있다.
+
+
+$$
+\begin{matrix}
+& & & & & & \text{Trigger!} \\
+& & & & & & \uparrow \\
+y^{<1>}=0 & & y^{<2>}=0 & & y^{<3>}=0 & & y^{<4>}=1 & & y^{<5>}=0 & & y^{<6>}=0 \\
+\uparrow & & \uparrow & & \uparrow & & \uparrow & & \uparrow & & \uparrow \\
+\text{unit} & \rightarrow & \text{unit} & \rightarrow & \text{unit} & \rightarrow & \text{unit} & \rightarrow & \text{unit} & \rightarrow & \text{unit}\\
+\uparrow & & \uparrow & & \uparrow & & \uparrow & & \uparrow & & \uparrow \\
+x^{<1>} & & x^{<2>} & & x^{<3>} & & x^{<4>} & & x^{<5>} & & x^{<6>} \\
+\uparrow & & \uparrow & & \uparrow & & \uparrow & & \uparrow & & \uparrow \\
+\end{matrix}
+$$
+
+$$
+\text{Audio Clip}
+$$
