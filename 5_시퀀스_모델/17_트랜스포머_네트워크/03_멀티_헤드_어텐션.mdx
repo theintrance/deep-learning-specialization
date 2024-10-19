@@ -1,0 +1,38 @@
+---
+title: 멀티 헤드 어텐션
+---
+
+* 셀프 어텐션을 더 확장하여, 문장의 각 의미적 문맥에 대한 별개의 어텐션 벡터를 만들 수 있다.
+
+$$
+x^{<t>} \\
+\downarrow \\
+q^{<t>},\quad k^{<t>},\quad v^{<t>}\\
+\downarrow \\
+W_i^Qq^{<t>},\quad W_i^Kk^{<t>},\quad W_i^Vv^{<t>}\\
+\downarrow \\
+\text{Softmax} \\
+\downarrow \\
+\text{Attention}(W_i^Qq^{<t>}, W_i^Kk^{<t>}, W_i^Vv^{<t>})=\text{head}_i
+$$
+
+* 각 시퀀스 요소는 자신의 쿼리, 키, 값을 가진다.
+* 여기까지는 셀프 어텐션과 동일하다.
+* 이후 각 $q$, $k$, $v$는 $i$ 번째 헤드의 가중치과 곱해지고, softmax 함수를 통해 어텐션 가중치를 얻는다.
+
+$$
+\text{Jane visite l'Afrique en septembre.}
+$$
+
+* "헤드" 는 문장에서의 의미적 문맥을 나타내는 단위이다.
+    * Head 1: 문장에서 뭘 하려는가? -> $\text{visite}=x^{<2>}$ 가 첫번째 헤드 소프트맥스에서 가장 큰 값
+    * Head 2: 누가 하려는가? -> $\text{Jane}=x^{<0>}$ 가 두번째 헤드 소프트맥스에서 가장 큰 값
+    * Head 3: 언제 하려는가? -> $\text{septembre}=x^{<3>}$ 가 세번째 헤드 소프트맥스에서 가장 큰 값
+    * Head 4: 어디서 하려는가? -> $\text{l'Afrique}=x^{<5>}$ 가 네번째 헤드 소프트맥스에서 가장 큰 값
+
+$$
+\text{MultiHead}(q, k, v) = \text{Concat}(\text{head}_1, \cdots, \text{head}_H)W_0
+$$
+
+* 이때 $W_0$는 최종 출력을 위한 가중치 행렬이다.
+* 이처럼 각 헤드가 독립적으로 다양한 패턴을 학습할 수 있기 때문에, 멀티 헤드 어텐션이 더 많은 문맥적 정보를 포착할 수 있다는 장점이 있다.
