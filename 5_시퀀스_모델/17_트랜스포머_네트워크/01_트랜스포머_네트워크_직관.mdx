@@ -2,3 +2,30 @@
 title: 트랜스포머 네트워크
 ---
 
+### 지금까지 배운 모델들
+
+* 지금까지 배운 모델들에서 시퀀스를 더 잘 처리하기 위해 더 복잡한 모델을 배워왔다
+    * 연속적인 데이터를 처리하기 위한 RNN
+    * 단기 메모리를 활용하기 위한 LSTM, GRU
+    * 더 긴 시퀀스를 처리하기 위한 어텐션 메커니즘
+
+* 그런데 위 네트워크들은 모두 "Sequential" 하다. 즉 한번에 한 단어나 토큰을 처리하는 모델이다.
+    * $\hat{y}^{<T_y>}$ 를 예측하기 위해서는 이전 예측 결과를 참고해야 한다.
+
+$$
+\begin{matrix}
+\hat{y}^{<0>} & & \hat{y}^{<1>} & & \cdots & & \hat{y}^{<T_y>} \\
+\uparrow & & \uparrow & & \cdots & & \uparrow \\
+\text{unit} & \rightarrow & \text{unit} & \rightarrow & \cdots & \rightarrow & \text{unit} \\
+& & \uparrow & & \cdots & & \uparrow \\
+& & y^{<0>} & &  \cdots & &  y^{<T_y-1>}
+\end{matrix}
+$$
+
+### Transformer Network
+
+* 트랜스포머 네트워크는 기존 RNN, LSTM, GRU 같은 시퀀스 처리 모델들의 "순차적 처리" 문제를 해결하기 위해 고안되었다. 
+* 반면 트랜스포머는 비순차적으로 데이터를 처리하며, 병렬 처리가 가능하다.
+
+* 트랜스포머는 Self-Attention 메커니즘을 통해 입력 시퀀스의 각 단어가 시퀀스 내 다른 단어들과의 관계를 고려할 수 있게 한다.
+* 트랜스포머는 주로 번역, 요약, 질의 응답 등 자연어 처리 작업에서 뛰어난 성능을 보인다.
