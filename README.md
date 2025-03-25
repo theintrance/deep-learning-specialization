@@ -20,6 +20,6 @@ Studying deep learning with deeplearning.ai on Coursera.
 
 - [@bayernmuller](https://github.com/bayernmuller)
 
-<img src="https://github.com/hyunwok.png" width="100" height="100">
+<img src="https://github.com/hyunwook13.png" width="100" height="100">
 
-- [@hyunwok](https://github.com/hyunwok)
+- [@hyunwook13](https://github.com/hyunwook13)
